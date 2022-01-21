@@ -1,38 +1,13 @@
 import React from "react";
-import { createStore, combineReducers } from 'redux';
 import { Provider } from "react-redux";
-import { StyleSheet, Text, View } from "react-native";
+import AppUI from './src';
+import store from './src/store';
 
-const reducers = {
-  todos: (state = [], action) => {
-    console.log(action);
-    return state;
-  }
-};
-
-const AppUi = () => (
-  <View style={styles.container}>
-    <Text>Open up App.js to start working on your app!</Text>
-  </View>
-);
-
-const store = createStore(combineReducers({
-  ...reducers,
-}))
 
 export default function App() {
   return (
     <Provider store={store}>
-        <AppUi />
+        <AppUI />
     </Provider>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: "#fff",
-    alignItems: "center",
-    justifyContent: "center"
-  }
-});
