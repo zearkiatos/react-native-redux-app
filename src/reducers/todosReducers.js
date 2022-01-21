@@ -1,3 +1,4 @@
+import { TODO_TYPES } from "../types";
 const INITIAL_STATE = [
   {
     id: 1,
@@ -10,11 +11,22 @@ const INITIAL_STATE = [
     completed: false
   }
 ];
+const complete = (id) => ({
+  type: TODO_TYPES.COMPLETE,
+  payload: id
+});
 const todos = (state = INITIAL_STATE, action) => {
-  console.log(action);
-  return state;
+  switch (action.type) {
+    case TODO_TYPES.COMPLETE:
+      return state.map((s) =>
+        s.id === action.payload ? { ...s, completed: !s.completed } : s
+      );
+    default:
+      return state;
+  }
 };
 
 export default {
-  todos
+  todos,
+  complete
 };

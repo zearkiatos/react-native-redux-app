@@ -1,9 +1,13 @@
 import React from "react";
 import { TouchableOpacity, Text, StyleSheet } from "react-native";
-const ListItem = ({ description, onPress }) => {
+const ListItem = ({ description, onPress, completed }) => {
   return (
     <TouchableOpacity onPress={onPress} style={styles.container}>
-      <Text style={styles.text}>{description}</Text>
+      {completed ? (
+        <Text style={[styles.text, styles.strike]}>✅ {description}</Text>
+      ) : (
+        <Text style={styles.text}>❌ {description}</Text>
+      )}
     </TouchableOpacity>
   );
 };
@@ -18,6 +22,10 @@ const styles = StyleSheet.create({
   },
   text: {
     fontSize: 18
+  },
+  strike: {
+    textDecorationLine: "line-through",
+    textDecorationStyle: "solid"
   }
 });
 

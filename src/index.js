@@ -2,14 +2,20 @@ import React from "react";
 import { StyleSheet, View, FlatList } from "react-native";
 import { connect } from "react-redux";
 import ListItem from "./components/ListItem";
-const AppUI = ({ todos }) => (
+import reducers from './reducers';
+
+const AppUI = ({ todos, complete }) => (
   <View style={styles.container}>
     <FlatList
       style={styles.list}
       data={todos}
       keyExtractor={(item) => String(item.id)}
       renderItem={({ item }) => (
-        <ListItem onPress={() => {}} description={item.description} />
+        <ListItem
+          onPress={() => complete(item.id)}
+          description={item.description}
+          completed={item.completed}
+        />
       )}
     />
   </View>
@@ -33,4 +39,8 @@ const mapStateToProps = (state) => {
   };
 };
 
-export default connect(mapStateToProps)(AppUI);
+const mapDispatchToProps = (dispatch) => ({
+  complete: (id) => dispatch(reducers.complete(id))
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(AppUI);
