@@ -1,11 +1,12 @@
 import React from "react";
 import { StyleSheet, View, FlatList } from "react-native";
+import { connect } from "react-redux";
 import ListItem from "./components/ListItem";
-const AppUI = () => (
+const AppUI = ({ todos }) => (
   <View style={styles.container}>
     <FlatList
       style={styles.list}
-      data={data}
+      data={todos}
       keyExtractor={(item) => String(item.id)}
       renderItem={({ item }) => (
         <ListItem onPress={() => {}} description={item.description} />
@@ -13,13 +14,6 @@ const AppUI = () => (
     />
   </View>
 );
-const data = [
-  {
-    id: 1,
-    description: "todo 1",
-    completed: false
-  }
-];
 const styles = StyleSheet.create({
   container: {
     marginTop: 35,
@@ -33,4 +27,10 @@ const styles = StyleSheet.create({
   }
 });
 
-export default AppUI;
+const mapStateToProps = (state) => {
+  return {
+    todos: state.todos
+  };
+};
+
+export default connect(mapStateToProps)(AppUI);
