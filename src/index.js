@@ -1,25 +1,33 @@
-import React from "react";
+import React, { useState } from "react";
 import { StyleSheet, View, FlatList } from "react-native";
 import { connect } from "react-redux";
 import ListItem from "./components/ListItem";
-import reducers from './reducers';
+import reducers from "./reducers";
+import Input from "./components/Input";
 
-const AppUI = ({ todos, complete }) => (
-  <View style={styles.container}>
-    <FlatList
-      style={styles.list}
-      data={todos}
-      keyExtractor={(item) => String(item.id)}
-      renderItem={({ item }) => (
-        <ListItem
-          onPress={() => complete(item.id)}
-          description={item.description}
-          completed={item.completed}
-        />
-      )}
-    />
-  </View>
-);
+const AppUI = ({ todos, complete, submit }) => {
+  const [value, setValue] = useState('');
+  const handleChange = (valueSearch) => {
+    setValue(valueSearch);
+  };
+  return (
+    <View style={styles.container}>
+      <Input onChange={handleChange} value={value} />
+      <FlatList
+        style={styles.list}
+        data={todos}
+        keyExtractor={(item) => String(item.id)}
+        renderItem={({ item }) => (
+          <ListItem
+            onPress={() => complete(item.id)}
+            description={item.description}
+            completed={item.completed}
+          />
+        )}
+      />
+    </View>
+  );
+};
 const styles = StyleSheet.create({
   container: {
     marginTop: 35,
@@ -40,7 +48,8 @@ const mapStateToProps = (state) => {
 };
 
 const mapDispatchToProps = (dispatch) => ({
-  complete: (id) => dispatch(reducers.complete(id))
+  complete: (id) => dispatch(reducers.complete(id)),
+  submit: (description) => dispatch(reducers.submit(description))
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(AppUI);
