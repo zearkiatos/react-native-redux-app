@@ -2,17 +2,21 @@ import React, { useState } from "react";
 import { StyleSheet, View, FlatList } from "react-native";
 import { connect } from "react-redux";
 import ListItem from "./components/ListItem";
-import reducers from "./reducers";
+import { todoActions } from "./actions";
 import Input from "./components/Input";
 
 const AppUI = ({ todos, complete, submit }) => {
-  const [value, setValue] = useState('');
+  const [value, setValue] = useState("");
   const handleChange = (valueSearch) => {
     setValue(valueSearch);
   };
+  const handleSubmit = () => {
+    submit(value);
+    setValue("");
+  };
   return (
     <View style={styles.container}>
-      <Input onChange={handleChange} value={value} />
+      <Input onSubmit={handleSubmit} onChange={handleChange} value={value} />
       <FlatList
         style={styles.list}
         data={todos}
@@ -48,8 +52,8 @@ const mapStateToProps = (state) => {
 };
 
 const mapDispatchToProps = (dispatch) => ({
-  complete: (id) => dispatch(reducers.complete(id)),
-  submit: (description) => dispatch(reducers.submit(description))
+  complete: (id) => dispatch(todoActions.complete(id)),
+  submit: (description) => dispatch(todoActions.submit(description))
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(AppUI);

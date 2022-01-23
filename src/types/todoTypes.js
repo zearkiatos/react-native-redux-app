@@ -1,5 +1,6 @@
 const TODO_TYPES = {
-  COMPLETE: "COMPLETE"
+  COMPLETE: "COMPLETE",
+  SUBMIT: "SUBMIT"
 };
 
 export default TODO_TYPES;

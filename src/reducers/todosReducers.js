@@ -11,22 +11,20 @@ const INITIAL_STATE = [
     completed: false
   }
 ];
-const complete = (id) => ({
-  type: TODO_TYPES.COMPLETE,
-  payload: id
-});
+
 const todos = (state = INITIAL_STATE, action) => {
   switch (action.type) {
     case TODO_TYPES.COMPLETE:
       return state.map((s) =>
         s.id === action.payload ? { ...s, completed: !s.completed } : s
       );
+    case TODO_TYPES.SUBMIT:
+      return [action.payload, ...state];
     default:
       return state;
   }
 };
 
 export default {
-  todos,
-  complete
+  todos
 };
