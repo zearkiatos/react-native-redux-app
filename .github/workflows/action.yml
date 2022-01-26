@@ -24,5 +24,10 @@ jobs:
            npm install
            npm install -g yarn
            npm install -g expo-cli
+    - name: Create .env
+      run: |
+        touch .env &&
+        echo "ENVIRONMENT=${ENVIRONMENT}" > .env &&
+        echo "JSON_PLACEHOLDER_API_BASE_URL=${JSON_PLACEHOLDER_API_BASE_URL}" >> .env
     - name: Build docker 🐳
       run: docker build . -t=react-native-redux-app:ghb-$GITHUB_RUN_NUMBER

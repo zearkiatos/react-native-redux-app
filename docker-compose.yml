@@ -5,8 +5,10 @@ services:
       context: .
       dockerfile: Dockerfile
     container_name: react-native-redux-app
-    volumes: 
+    volumes:
       - ".:/app"
+    env_file:
+      - ".env"
     ports:
       - "9006:19006"
     tty: true
