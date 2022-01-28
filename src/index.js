@@ -53,7 +53,7 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => ({
   complete: (id) => dispatch(todoActions.complete(id)),
-  submit: (description) => dispatch(todoActions.submit(description))
+  submit: (data) => dispatch(todoActions.saveTodo(data))
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(AppUI);

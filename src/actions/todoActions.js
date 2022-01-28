@@ -1,13 +1,9 @@
 import { TODO_TYPES } from "../types";
-import config from '../config';
+import config from "../config";
 
-const submit = (text) => ({
+const submit = (todo) => ({
   type: TODO_TYPES.SUBMIT,
-  payload: {
-    description: text,
-    completed: false,
-    id: Math.random().toString(36)
-  }
+  payload: todo
 });
 
 const complete = (id) => ({
@@ -25,15 +21,25 @@ const errorSubmit = (error) => ({
 });
 
 const saveTodo = (text) => async (dispatch, getState) => {
-  const state = getState();
-  console.log(state);
   dispatch(startSubmit());
   try {
-    const response = await fetch(`${config.JSON_PLACEHOLDER_API_BASE_URL}/todos`);
-    dispatch(submit(text));
+    const todo = {
+      description: text,
+      completed: false
+    };
+    const response = await fetch(
+      `${config.JSON_PLACEHOLDER_API_BASE_URL}/todos`,
+      {
+        method: "POST",
+        body: JSON.stringify(todo)
+      }
+    );
+    const { id } = await response.json();
+    console.log(id);
+    dispatch(submit({ ...todo, id }));
   } catch (ex) {
     dispatch(errorSubmit(ex));
   }
 };
 
-export default { submit, complete };
+export default { submit, complete, saveTodo };
